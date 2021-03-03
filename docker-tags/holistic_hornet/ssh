@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# Document purpose of script here.
+#
+# -----------------------------------------------------------------
+#
+# SSH to a host.
+#  
+# -----------------------------------------------------------------
+
+# Check mlkcontext to check. If void, no check will be performed
+MATCH_MLKCONTEXT=
+# Remote SSH username
+USER_NAME=
+# Host
+HOST=
+# SSH port
+SSH_PORT=22
+# Amazon AWS PEM key (it´s a path to a file)
+AWS_PEM=
+
+
+
+
+
+# ---
+
+# Check mlkcontext
+
+if [ ! -z "${MATCH_MLKCONTEXT}" ] ; then
+
+  if [ ! "$(mlkcontext)" = "$MATCH_MLKCONTEXT" ] ; then
+
+    echo Please initialise context $MATCH_MLKCONTEXT
+
+    exit 1
+
+  fi
+
+fi
+
+
+# Amazon PEM
+
+if [ ! -z $AWS_PEM ] ; then
+
+    RSH_OPTIONS="-i ${AWS_PEM} -p ${SSH_PORT}"
+
+else
+
+    RSH_OPTIONS="-p ${SSH_PORT}"
+
+fi
+
+
+# The command
+
+SSH="ssh ${RSH_OPTIONS} "
+
+
+# Command
+
+RSYNC="${SSH} ${USER_NAME}@${HOST}"
+
+# eval $RSYNC
+
+eval $RSYNC

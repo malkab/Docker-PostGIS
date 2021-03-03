@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# ---------------------------
+#
+# Common settings for all contexts.
+#
+# ---------------------------
+#
+# Prefix variables with MLKC_.
+#
+# ---------------------------
+
+# Sets some env variables for the building process
+export MLKC_DOCKER_IMAGE_TAG=gargantuan_giraffe
+
+# Two version numbers
+export MLKC_PG_VERSION=12.3
+# Three version numbers from here
+export MLKC_GEOS_VERSION=3.8.1
+export MLKC_PROJ_VERSION=7.1.0
+export MLKC_GDAL_VERSION=3.1.2
+export MLKC_POSTGIS_VERSION=3.1.0alpha2

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# ---------------------------
+#
+# Common settings for all contexts.
+#
+# ---------------------------
+#
+# Prefix variables with MLKC_.
+#
+# ---------------------------
+
+# Sets some env variables for the building process
+export MLKC_DOCKER_IMAGE_TAG=holistic_hornet
+
+# Two version numbers
+export MLKC_PG_VERSION=13.2
+# Three version numbers from here
+export MLKC_GEOS_VERSION=3.9.1
+export MLKC_PROJ_VERSION=7.2.1
+export MLKC_GDAL_VERSION=3.2.1
+export MLKC_POSTGIS_VERSION=3.1.1

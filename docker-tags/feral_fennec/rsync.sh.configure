@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# rsync to a remote host for compiling.
+#
+# -----------------------------------------------------------------
+#
+# Push assets to a remote host. Be VERY CAREFULL with the --delete
+# option!!! Terrible data loss has happen in the past. Use DRY_RUN
+# to test first.
+#  
+# -----------------------------------------------------------------
+
+# Source folder, can be the folder itself.
+SOURCE_FOLDER=.
+# Remote folder, this folder will be created at the remote if possible
+# Use absolute paths exclusively.
+REMOTE_FOLDER=/home/docker/postgis-feral_fennec-compilation
+# Remote SSH username
+USER_NAME=
+# Host
+HOST=
+# Excludes, for example ("a*" "e*" "r*") 
+EXCLUDES=(".DS_Store" "rsync*" ".gitignore")
+# SSH port
+SSH_PORT=22
+# Amazon AWS PEM key (it´s a path to a file)
+AWS_PEM=
+# Dry run
+DRY_RUN=true
+# Delete. BEWARE!!!
+DELETE=true
+
+
+
+
+
+# ---
+
+# Create the remote folder
+
+# Amazon PEM
+
+if [ "$DRY_RUN" = false ] ; then
+
+    if [ ! -z $AWS_PEM ] ; then
+
+        FOLDER_RSH_OPTIONS="-i ${AWS_PEM}"
+
+    else
+
+        FOLDER_RSH_OPTIONS=
+
+    fi
+
+    ssh -p $SSH_PORT $FOLDER_RSH_OPTIONS $USER_NAME@$HOST "mkdir -p ${REMOTE_FOLDER}"
+    
+fi
+
+
+# BEWARE THE DELETE!!!
+
+if [ "$DELETE" = true ] ; then DELETE="--delete"; else DELETE="" ; fi
+
+
+# Dry run
+
+if [ "$DRY_RUN" = true ] ; then DRY_RUN="--dry-run"; else DRY_RUN="" ; fi
+
+
+# Amazon PEM
+
+if [ ! -z $AWS_PEM ] ; then
+
+    RSH_OPTIONS="--rsh=\"ssh -i ${AWS_PEM} -p ${SSH_PORT}\""
+
+else
+
+    RSH_OPTIONS="--rsh=\"ssh -p ${SSH_PORT}\""
+
+fi
+
+
+# The command
+
+RSYNC="rsync -avzhr --progress ${DELETE} ${DRY_RUN} ${RSH_OPTIONS} "
+
+
+# Process of excludes
+
+for EXCLUDE in "${EXCLUDES[@]}" ; do
+
+    RSYNC="${RSYNC} --exclude \"${EXCLUDE}\""
+
+done
+
+
+# Command
+
+RSYNC="${RSYNC} ${SOURCE_FOLDER} ${USER_NAME}@${HOST}:${REMOTE_FOLDER}"
+
+eval $RSYNC
