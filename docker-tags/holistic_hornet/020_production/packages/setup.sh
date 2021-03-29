@@ -30,14 +30,6 @@ rm -rf /var/lib/apt/lists/*
 # Make Python3 default
 ln -s /usr/bin/python3 /usr/bin/python
 
-
-# Setup user
-
-# Creation of postgres user and group
-groupadd -g $POSTGRESGROUPID postgres
-useradd -u $POSTGRESUSERID -g postgres postgres
-
-
 # Locales
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen

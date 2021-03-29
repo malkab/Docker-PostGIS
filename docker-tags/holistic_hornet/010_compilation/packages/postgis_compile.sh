@@ -156,9 +156,9 @@ echo
 
 make install
 
-cd ../..
-
 ldconfig
+
+cd ../..
 
 
 # Compilation of Proj
@@ -195,17 +195,23 @@ make install
 
 echo
 echo ---------------------------------------
-echo Installing national grids
+echo Installing proj-data
 echo ---------------------------------------
 echo
 
 cd ..
 
-cp grids/es_ign_* /usr/local/share/proj
+tar -xvf proj-data.tar.gz -C $PROJ_LIB
 
-cd ..
+# This is a PROJ hack because they are using the old grid names when
+# transforming from ED50 to ETRS89. It is supposed to be fix in the
+# next release.
+ln -s /usr/local/share/proj/es_ign_SPED2ETV2.tif /usr/local/share/proj/PENR2009.gsb
+ln -s /usr/local/share/proj/es_ign_SPED2ETV2.tif /usr/local/share/proj/BALR2009.gsb
 
 ldconfig
+
+cd ..
 
 
 # Compilation of GDAL
@@ -221,11 +227,6 @@ cd gdal
 tar -xvf gdal.tar.gz
 
 cd gdal-$GDAL_VERSION
-
-# # Inject modified data
-# rm data/epsg.wkt
-# cp ../data/epsg.wkt ./data
-# cp ../data/gcs.csv ./data
 
 ./configure
 

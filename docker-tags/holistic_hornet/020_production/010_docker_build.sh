@@ -4,26 +4,35 @@
 
 # -----------------------------------------------------------------
 #
-# Document here the purpose of the script.
+# Builds the production image.
 #
 # -----------------------------------------------------------------
 #
 # Builds a Docker image.
 #
 # -----------------------------------------------------------------
-# Check mlkcontext to check. If void, no check will be performed. If NOTNULL,
+# Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCONTEXT=common
+MATCH_MLKCTXT=common
 # The name of the image to build. Mandatory.
 IMAGE_NAME=malkab/postgis
 # The tags. An array of tags in the form (tagA tagB) to create as many images
 # as tags. Defaults to (latest).
-IMAGE_TAGS=
+IMAGE_TAGS=(holistic_hornet latest)
 # Dockerfile.
 DOCKERFILE=.
 # Build args, an array of (ARG_NAME=ARG_VALUE ARG_NAME=ARG_VALUE) structure
 # to add --build-arg parameters to the build. Defaults to ().
-BUILD_ARGS=
+BUILD_ARGS=(
+  PG_VERSION=$MLKC_PG_VERSION
+  GEOS_VERSION=$MLKC_GEOS_VERSION
+  PROJ_VERSION=$MLKC_PROJ_VERSION
+  GDAL_VERSION=$MLKC_GDAL_VERSION
+  POSTGIS_VERSION=$MLKC_POSTGIS_VERSION
+)
+
+# Copy binaries from 010_compilation
+cp -R ../010_compilation/binaries ./packages
 
 
 
@@ -31,11 +40,11 @@ BUILD_ARGS=
 
 # ---
 
-# Check mlkcontext is present at the system
-if command -v mlkcontext &> /dev/null
+# Check mlkctxt is present at the system
+if command -v mlkctxt &> /dev/null
 then
 
-  if ! mlkcontext -c $MATCH_MLKCONTEXT ; then exit 1; fi
+  if ! mlkctxt -c $MATCH_MLKCTXT ; then exit 1; fi
 
 fi
 

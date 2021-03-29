@@ -11,12 +11,12 @@
 # Pushes images to the GitLab registry with confirmation.
 #
 # -----------------------------------------------------------------
-# Check mlkcontext to check. If void, no check will be performed. If NOTNULL,
+# Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCONTEXT=common
+MATCH_MLKCTXT=
 # A set of images to upload, in the form (image0 image1). Could be multiline
 # inside the parentheses. Provide the full image names as shown in docker
-# images.
+# images. This parameter is mandatory.
 IMAGES=(
   malkab/postgis:holistic_hornet
   malkab/postgis:latest
@@ -34,10 +34,10 @@ REGISTRY=
 
 # ---
 
-# Check mlkcontext is present at the system
-if command -v mlkcontext &> /dev/null ; then
+# Check mlkctxt is present at the system
+if command -v mlkctxt &> /dev/null ; then
 
-  if ! mlkcontext -c $MATCH_MLKCONTEXT ; then exit 1 ; fi
+  if ! mlkctxt -c $MATCH_MLKCTXT ; then exit 1 ; fi
 
 fi
 

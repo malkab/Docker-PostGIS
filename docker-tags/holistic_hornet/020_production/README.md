@@ -2,8 +2,6 @@
 
 This image is intended for production.
 
-**WARNING:** this build seems not to be able to reproject from ED50 to ETRS89 using the spanish transformation grids. PROJ seems to be doing it right, but GDAL and PostGIS not. Do not use this image for precision reprojecting.
-
 
 ## Versions
 
@@ -15,11 +13,16 @@ This image is created with the binaries compiled by the **compilation** image an
 
 - **Proj 7.2.1;**
 
-- **GDAL 3.2.1;**
+- **GDAL 3.2.2;**
 
 - **PostGIS 3.1.1;**
 
 - **Python 3:** to be used as PL/Python language version.
+
+
+## Datum Shifting
+
+Regarding Spanish transformations, specially those concerning Andalusia, this image contains PROJ, GDAL, and PostGIS, all of them systems capable of shifting coordinates accurately using the IGN's grid from ED50 to ETRS89 for UTM zones 30 and 31. Other transformations are not covered by the grid.
 
 
 ## Image Creation
@@ -94,7 +97,7 @@ The container will check if there is a datastore initiated at **/data**. If not,
 
 ## User Mapping
 
-The internal **postgres** user UID and GID can be configured with the **POSTGRESUSERID** and the **POSTGRESGROUPID** env vars. They are set to 1000:1000 by default.
+The internal **postgres** user UID and GID can be configured with the **POSTGRESUSERID** and the **POSTGRESGROUPID** env vars. They are set to 1000:1000 by default. This user will be the owner of the datastore, so this is specially usefull in development environments to map the host-bound data volume to the host user used by the developer. This also applies when using the image for psql sessions.
 
 
 ## Script Database Initialization
@@ -219,7 +222,7 @@ docker run -ti --rm \
   malkab/postgis:holistic_hornet
 ```
 
-Custom run:
+Custom run, mapping the user owner of the data warehouse:
 
 ```Shell
 docker run -ti --rm \
@@ -227,17 +230,21 @@ docker run -ti --rm \
   -p 5432:5432 \
   -e "LANG=es_ES.UTF-8" \
   -e "PASSWORD=thepass" \
+  -e "POSTGRESUSERID=1004" \
+  -e "POSTGRESGROUPID=1009" \
   -v $(pwd)/postgresql-c:/default_confs/postgresql.conf \
   -v $(pwd)/pg_hba-c:/default_confs/pg_hba.conf \
   malkab/postgis:holistic_hornet
 ```
 
-Custom command run:
+Custom psql command run, mapping the user to 1000:1000:
 
 ```Shell
 docker run -ti --rm \
   --network="host" \
   --entrypoint /bin/bash \
+  -e "POSTGRESUSERID=1000" \
+  -e "POSTGRESGROUPID=1000" \
   malkab/postgis:holistic_hornet \
   -c "psql -h localhost -p 8888 -U postgres postgres"
 ```

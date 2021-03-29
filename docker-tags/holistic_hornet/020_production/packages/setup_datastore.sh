@@ -2,6 +2,16 @@
 
 echo
 echo -----------------------------
+echo Creating user "postgres" with uid:gid $POSTGRESUSERID:$POSTGRESGROUPID
+echo -----------------------------
+echo
+
+# Creation of postgres user and group
+groupadd -g $POSTGRESGROUPID postgres
+useradd -u $POSTGRESUSERID -g postgres postgres
+
+echo
+echo -----------------------------
 echo Configuring server...
 echo -----------------------------
 echo
@@ -110,7 +120,7 @@ if [ -f /initdb.sh ]; then
   echo Stopping server...
   echo -----------------------------
   echo
-  
+
   su postgres -c "pg_ctl -w -D /data/ stop"
 
 fi

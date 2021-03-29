@@ -8,6 +8,9 @@ docker build -t=testpostgis-deleteme .
 docker run -ti --rm \
   -p 8888:5432 \
   -v $(pwd)/../../:/ext-src \
+  -v $(pwd)/data/:/data \
+  -e "POSTGRESUSERID=1004" \
+  -e "POSTGRESGROUPID=1009" \
   --workdir / \
   --name testpostgis-deleteme \
   testpostgis-deleteme

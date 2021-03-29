@@ -3,7 +3,7 @@
 # This script exports the binaries needed to build a production PostGIS
 # Docker image from the assets compiled by the compilation Docker image
 # Check mlkcontext to check. If void, no check will be performed
-MATCH_MLKCONTEXT=common
+MATCH_MLKCTXT=common
 
 
 
@@ -13,15 +13,11 @@ MATCH_MLKCONTEXT=common
 
 # Check mlkcontext
 
-if [ ! -z "${MATCH_MLKCONTEXT}" ] ; then
+# Check mlkctxt is present at the system
+if command -v mlkctxt &> /dev/null
+then
 
-  if [ ! "$(mlkcontext)" = "$MATCH_MLKCONTEXT" ] ; then
-
-    echo Please initialise context $MATCH_MLKCONTEXT
-
-    exit 1
-
-  fi
+  if ! mlkctxt -c $MATCH_MLKCTXT ; then exit 1; fi
 
 fi
 

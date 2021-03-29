@@ -16,4 +16,3 @@ echo "Starting the server..."
 
 # Start the database
 exec gosu postgres /usr/local/bin/postgres -D /data/
-
