@@ -31,6 +31,9 @@ ADD packages/setup.sh bin/
 ADD packages/create_user.sh bin/
 ADD packages/run_psql.sh bin/
 ADD packages/psqlrc /root/.psqlrc
+ADD packages/bashrc /root/.bashrc
+ADD packages/psqlrc /etc/skel/.psqlrc
+ADD packages/bashrc /etc/skel/.bashrc
 ADD packages/setup_datastore.sh bin/
 ADD packages/gosu bin/
 
