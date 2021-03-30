@@ -20,14 +20,16 @@ ENV PASSWORD postgres
 ENV TERM xterm
 
 # Default user mapping
-ENV POSTGRESUSERID 1000
-ENV POSTGRESGROUPID 1000
+ENV POSTGRESUSERID 0
+ENV POSTGRESGROUPID 0
 
 # Load assets
 WORKDIR /usr/local
 
 ADD packages/run.sh bin/
 ADD packages/setup.sh bin/
+ADD packages/create_user.sh bin/
+ADD packages/run_psql.sh bin/
 ADD packages/psqlrc /root/.psqlrc
 ADD packages/setup_datastore.sh bin/
 ADD packages/gosu bin/
@@ -38,7 +40,7 @@ COPY packages/*.conf /default_confs/
 # Install binaries
 ADD packages/binaries/ /
 
-# Setup and binaries installation
+# Setup user and binaries installation
 RUN chmod 777 bin/*
 RUN bin/setup.sh
 

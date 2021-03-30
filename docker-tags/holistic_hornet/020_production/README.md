@@ -97,7 +97,7 @@ The container will check if there is a datastore initiated at **/data**. If not,
 
 ## User Mapping
 
-The internal **postgres** user UID and GID can be configured with the **POSTGRESUSERID** and the **POSTGRESGROUPID** env vars. They are set to 1000:1000 by default. This user will be the owner of the datastore, so this is specially usefull in development environments to map the host-bound data volume to the host user used by the developer. This also applies when using the image for psql sessions.
+The internal **postgres** user UID and GID can be reconfigured at image building time with the **POSTGRESUSERID** and the **POSTGRESGROUPID** env vars. This will create a fixed user and group with the given UID and GID at run time, set to 0:0 by default. This user will be the owner of the datastore, so this is specially usefull in development environments to map the host-bound data volume to the host user used by the developer. This also applies when using the image for psql sessions. Check test image at **test_custom_image_with_script** for an example.
 
 
 ## Script Database Initialization

@@ -52,7 +52,6 @@ sed -i -e 's/# it_IT@euro ISO-8859-15/it_IT@euro ISO-8859-15/' /etc/locale.gen
 
 locale-gen
 
-
 # Clean up
 rm -Rf /usr/local/src
 
