@@ -14,7 +14,7 @@
 # -----------------------------------------------------------------
 # Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCTXT=common
+MATCH_MLKCTXT=
 # PostgreSQL user UID and GID. Defaults to 1000/1000, the default postgres
 # server user.
 POSTGRESUSERID=
@@ -22,7 +22,7 @@ POSTGRESGROUPID=
 # The network to connect to. Remember that when attaching to the network of an
 # existing container (using container:name) the HOST is "localhost". Also the
 # host network can be connected using just "host".
-NETWORK=container:testpostgis-deleteme
+NETWORK=host
 # These two options are mutually exclusive. Use null at both for an interactive
 # psql session. In case of passing a script, files must exist at a mounted
 # volume at the VOLUMES section, referenced by a full path. By default, the
@@ -38,9 +38,9 @@ ID_ROOT=
 # true.
 UNIQUE=
 # Work dir. Use $(pwd) paths. Defaults to /.
-WORKDIR=/ext-src/
+WORKDIR=$(pwd)
 # The version of PG to use. Defaults to latest.
-PG_DOCKER_TAG=holistic_hornet
+PG_DOCKER_TAG=
 # The host, defaults to localhost.
 HOST=
 # The port, defaults to 5432.
@@ -50,18 +50,12 @@ USER=
 # The pass, defaults to postgres.
 PASS=
 # The DB, defaults to postgres.
-DB=ul
+DB=
 # Declare volumes, a line per volume, complete in source:destination form. No
 # strings needed, $(pwd)/../data/:/ext_src/ works perfectly. Defaults to ().
-VOLUMES=(
-  #$(pwd)/../:$(pwd)/../
-  $(pwd)/assets/:/ext-src/
-)
+VOLUMES=($(pwd):$(pwd))
 # Env vars. Use ENV_VAR_NAME_CONTAINER=ENV_VAR_NAME_HOST format. Defaults to ().
-ENV_VARS=(
-  ENV_A=0
-  ENV_B=1
-)
+ENV_VARS=
 # Output to files. This will run the script silently and output results and
 # errors to $OUTPUT_FILES_results.txt and $OUTPUT_FILES_errors.txt to the
 # WORKDIR. Use only if running with the SCRIPT or COMMAND options. If empty,
@@ -84,7 +78,7 @@ fi
 # Manage identifier
 if [ ! -z "${ID_ROOT}" ] ; then
 
-  N="${ID_ROOT}_$(mlkctxt)"
+  N="${ID_ROOT}"
   CONTAINER_HOST_NAME_F="--hostname ${N}"
 
   if [ "${UNIQUE}" = false ] ; then

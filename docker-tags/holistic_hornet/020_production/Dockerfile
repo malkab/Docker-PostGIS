@@ -28,7 +28,6 @@ WORKDIR /usr/local
 
 ADD packages/run.sh bin/
 ADD packages/setup.sh bin/
-ADD packages/create_user.sh bin/
 ADD packages/run_psql.sh bin/
 ADD packages/psqlrc /root/.psqlrc
 ADD packages/bashrc /root/.bashrc

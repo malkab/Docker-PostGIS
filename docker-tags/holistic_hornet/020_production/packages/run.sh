@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Check if the datastore is empty
-
 if [ -z "$(ls -A "/data/")" ] ; then
 
   /usr/local/bin/setup_datastore.sh

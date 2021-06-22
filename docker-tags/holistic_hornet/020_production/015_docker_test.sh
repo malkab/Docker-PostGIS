@@ -1,20 +1,21 @@
 #!/bin/bash
 
-# Version 2021-03-03
+# Version: 2021-06-22
 
 # -----------------------------------------------------------------
 #
-# Document here the purpose of the script.
+# Run a test server.
 #
 # -----------------------------------------------------------------
 #
 # Creates a container with an instance of PostgreSQL, either interactive and
-# volatile or persistent in a volume.
+# volatile or persistent in a volume. Remember that the server will be run by a
+# container user postgres with UID/GID 1000:1000.
 #
 # -----------------------------------------------------------------
-# Check mlkcontext to check. If void, no check will be performed. If NOTNULL,
+# Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCONTEXT=common
+MATCH_MLKCTXT=
 # The network to connect to. Remember that when attaching to the network of an
 # existing container (using container:name) the HOST is "localhost". Also the
 # host network can be connected using just "host".
@@ -40,7 +41,7 @@ RUN_MODE=
 # The data dir can be a folder routed with $(pwd) or a name for a system-wide
 # volume, or even drop it altogether for in-container data if null. This will be
 # map to the /data internal folder.
-PG_DATA_DIR=
+PG_DATA_DIR=$(pwd)/test_datastore
 # The version of PG to use. Defaults to latest.
 PG_DOCKER_TAG=
 # Locale. Defaults to es_ES.
@@ -55,9 +56,6 @@ POSTGRESQL_CONF=
 PG_HBA_CONF=
 # postgres user password (postgres if blank).
 PASSWORD=
-# PostgreSQL user UID and GID. Defaults to 1000 and 1000.
-POSTGRESUSERID=
-POSTGRESGROUPID=
 
 
 
@@ -65,17 +63,17 @@ POSTGRESGROUPID=
 
 # ---
 
-# Check mlkcontext is present at the system
-if command -v mlkcontext &> /dev/null ; then
+# Check mlkctxt is present at the system
+if command -v mlkctxt &> /dev/null ; then
 
-  if ! mlkcontext -c $MATCH_MLKCONTEXT ; then exit 1 ; fi
+  if ! mlkctxt -c $MATCH_MLKCTXT ; then exit 1 ; fi
 
 fi
 
 # Manage identifier
 if [ ! -z "${ID_ROOT}" ] ; then
 
-  N="${ID_ROOT}_$(mlkcontext)"
+  N="${ID_ROOT}"
   CONTAINER_HOST_NAME_F="--hostname ${N}"
 
   if [ "${UNIQUE}" = false ] ; then
@@ -169,16 +167,8 @@ if [ ! -z "${PORT}" ] ; then PORT_F=$PORT ; fi
 PG_DOCKER_TAG_F=latest
 if [ ! -z "${PG_DOCKER_TAG}" ] ; then PG_DOCKER_TAG_F=$PG_DOCKER_TAG ; fi
 
-# UID
-POSTGRESUSERID_F=1000
-if [ ! -z "${POSTGRESUSERID}" ] ; then POSTGRESUSERID_F=$POSTGRESUSERID ; fi
-
-# GID
-POSTGRESGROUPID_F=1000
-if [ ! -z "${POSTGRESGROUPID}" ] ; then POSTGRESGROUPID_F=$POSTGRESGROUPID ; fi
-
 # Final command
-eval    $COMMAND $INTERACTIVE \
+eval    $COMMAND \
             $NETWORK \
             $CONTAINER_NAME_F \
             $CONTAINER_HOST_NAME_F \
@@ -188,8 +178,6 @@ eval    $COMMAND $INTERACTIVE \
             $PG_HBA_CONF \
             $PASSWORD \
             -e "LOCALE=${LOCALE_F}" \
-            -e "POSTGRESUSERID=${POSTGRESUSERID_F}" \
-            -e "POSTGRESGROUPID=${POSTGRESGROUPID_F}" \
             $ENV_VARS_F \
             -p $PORT_F:5432 \
             malkab/postgis:$PG_DOCKER_TAG_F

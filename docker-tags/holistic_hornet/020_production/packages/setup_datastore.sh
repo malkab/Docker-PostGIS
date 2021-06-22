@@ -8,18 +8,14 @@ echo
 
 echo
 echo -----------------------------
-echo Configuring user...
+echo Configuring data folder...
 echo -----------------------------
 echo
-
-create_user.sh
-
 
 # Creation of data folder
 mkdir -p /data/
 chmod 0700 /data/
 chown postgres:postgres /data/
-
 
 echo
 echo -----------------------------
@@ -67,7 +63,6 @@ echo
 
 su postgres -c "pg_ctl -w -D /data/ stop"
 
-
 # Erase default configuration and initialize it
 echo
 echo -----------------------------
@@ -87,7 +82,6 @@ echo
 
 su postgres -c "rm /data/postgresql.conf"
 su postgres -c "cp /default_confs/postgresql.conf /data/"
-
 
 # Check if there is a /initdb.sql script to initialize database
 if [ -f /initdb.sh ]; then
