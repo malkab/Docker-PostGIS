@@ -25,21 +25,32 @@ This image is created with the binaries compiled by the **compilation** image an
 Regarding Spanish transformations, specially those concerning Andalusia, this image contains PROJ, GDAL, and PostGIS, all of them systems capable of shifting coordinates accurately using the IGN's grid from ED50 to ETRS89 for UTM zones 30 and 31. Other transformations are not covered by the grid.
 
 
-## Image Creation
+## Image Pull
 
-Compile software from source by running the **compilation** image. With the **default context** active, build this image:
-
-```Shell
-010_docker_build.sh
-
-020_docker_push.sh
-```
-
-or pull it from Docker Hub:
+Pull it from Docker Hub:
 
 ```Shell
 docker pull malkab/postgis:holistic_hornet
 ```
+
+
+## Image Creation
+
+Compile software from source by running the **compilation** image. With the **default context** active, **rsync** if needed, and build this image:
+
+- [] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote;
+
+- [] activate the **default** context;
+
+- [] rsync to remote and ssh, if applicable;
+
+- [] build with **010**;
+
+- [] start a test instance with **015** and test a psql session with **017**;
+
+- [] test with the assets at **test_custom_image_with_scripts**. This will test PostGIS and datum shiftings;
+
+- [] finally push with **020**.
 
 
 ## Locales
@@ -93,6 +104,12 @@ The container will check if there is a datastore initiated at **/data**. If not,
 
 - **PASSWORD:** the starting password for postgres user;
 - **LANG:** the locale (see **Locales** section).
+
+Remember that the datastore must adhere to some critical rules:
+
+- datastore folders must have permissions **0700**;
+
+- files in datastore must have permissions **0600**.
 
 
 ## User Mapping

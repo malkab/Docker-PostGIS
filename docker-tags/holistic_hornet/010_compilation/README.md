@@ -36,17 +36,19 @@ Then, update **mlkctxt** with the versions and the new image tag and activate th
 
 Then follow the scripts. This will create an image that compiles and installs the full software stack into a **postgis_compilation:[postgis_tag]**:
 
-```Shell
-010_docker_build.sh
-```
+- [] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote;
 
-Once build, extract binaries running:
+- [] activate the **default** context;
 
-```Shell
-030_docker_get_binaries.sh
-```
+- [] rsync to remote and ssh, if applicable;
 
-This will create a **binaries** folder in this directory containing all that the production image needs for the Production image folder to build.
+- [] run **010_docker_build.sh > out** to store compilation log (follow with tail -f -n 1000 out);
+
+- [] run **020** and inside **tests/cs2cs.sh** to check datum shiftings;
+
+- [] test binaries extraction with **030**. This will create a **binaries** folder in this directory containing all that the production image needs;
+
+- [] proceed to **020_production**.
 
 
 ## Testing new Compilations Workflows
