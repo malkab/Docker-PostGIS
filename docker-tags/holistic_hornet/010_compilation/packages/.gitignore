@@ -1,2 +1,6 @@
-*.tar.gz
-*.tar.bz2
+gdal/*.tar.*
+geos/*.tar.*
+postgis/*.tar.*
+postgresql/*.tar.*
+proj/*.tar.*
+proj-data/*.tar.*

@@ -78,7 +78,7 @@ echo
 
 cd postgresql
 
-tar -xvf postgresql.tar.bz2
+tar -xvf postgresql-$PG_VERSION.tar.bz2
 
 cd postgresql-$PG_VERSION
 
@@ -134,7 +134,7 @@ echo
 
 cd geos
 
-tar -xvf geos.tar.bz2
+tar -xvf geos-$GEOS_VERSION.tar.bz2
 
 cd geos-$GEOS_VERSION
 
@@ -165,7 +165,7 @@ cd ../..
 
 cd proj
 
-tar -xvf proj.tar.gz
+tar -xvf proj-$PROJ_VERSION.tar.gz
 
 echo
 echo ---------------------------------------
@@ -193,19 +193,19 @@ echo
 
 make install
 
+cd ../..
+
 echo
 echo ---------------------------------------
 echo Installing proj-data
 echo ---------------------------------------
 echo
 
-cd ..
+cd proj-data
 
-tar -xvf proj-data.tar.gz -C $PROJ_LIB
+tar -xvf proj-data-$PROJ_DATA_VERSION.tar.gz -C $PROJ_LIB
 
-# This is a PROJ hack because they are using the old grid names when
-# transforming from ED50 to ETRS89. It is supposed to be fix in the
-# next release.
+# A PROJ hack
 ln -s /usr/local/share/proj/es_ign_SPED2ETV2.tif /usr/local/share/proj/PENR2009.gsb
 ln -s /usr/local/share/proj/es_ign_SPED2ETV2.tif /usr/local/share/proj/BALR2009.gsb
 
@@ -224,7 +224,7 @@ echo
 
 cd gdal
 
-tar -xvf gdal.tar.gz
+tar -xvf gdal-$GDAL_VERSION.tar.gz
 
 cd gdal-$GDAL_VERSION
 
@@ -260,7 +260,7 @@ echo
 
 cd postgis
 
-tar -xvf postgis.tar.gz
+tar -xvf postgis-$POSTGIS_VERSION.tar.gz
 
 cd postgis-$POSTGIS_VERSION
 

@@ -26,7 +26,7 @@ PORT=
 # UID to avoid clashing) and the container host name (without UID). Incompatible
 # with NETWORK container:name option. If blank, a Docker engine default name
 # will be assigned to the container.
-ID_ROOT=
+ID_ROOT=docker_postgis_test
 # Unique? If true, no container with the same name can be created. Defaults to
 # true.
 UNIQUE=

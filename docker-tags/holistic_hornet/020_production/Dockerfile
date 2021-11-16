@@ -16,12 +16,11 @@ ENV GEOS_VERSION $GEOS_VERSION
 ENV PROJ_VERSION $PROJ_VERSION
 ENV GDAL_VERSION $GDAL_VERSION
 ENV POSTGIS_VERSION $POSTGIS_VERSION
-ENV PASSWORD postgres
 ENV TERM xterm
-
-# Default user mapping
-ENV POSTGRESUSERID 0
-ENV POSTGRESGROUPID 0
+# The postgres user postgres
+ENV PASSWORD postgres
+# The locale
+ENV LANG en_US.UTF-8
 
 # Load assets
 WORKDIR /usr/local
@@ -45,9 +44,6 @@ ADD packages/binaries/ /
 # Setup user and binaries installation
 RUN chmod 777 bin/*
 RUN bin/setup.sh
-
-# The locale
-ENV LANG en_US.UTF-8
 
 # Port
 EXPOSE 5432

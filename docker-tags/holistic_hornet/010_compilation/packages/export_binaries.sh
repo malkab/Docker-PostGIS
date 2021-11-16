@@ -6,6 +6,7 @@
 # Docker image from the assets compiled by the compilation Docker image
 
 # Folder creation
+rm -Rf /ext-out/binaries
 mkdir -p /ext-out/binaries
 
 # Export of the key folders

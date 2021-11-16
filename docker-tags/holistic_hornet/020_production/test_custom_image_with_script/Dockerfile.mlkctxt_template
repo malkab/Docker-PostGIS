@@ -1,4 +1,4 @@
-FROM malkab/postgis:holistic_hornet
+FROM malkab/postgis:[{docker_image_tag}]
 
 ENV PASSWORD=aaa
 ENV LANG=en_US.UTF-8

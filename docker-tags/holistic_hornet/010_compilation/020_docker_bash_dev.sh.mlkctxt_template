@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Runs a session inside the compilation image for testing
+
+mlkdckrun \
+  -i postgis_compilation_tests \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  -y /bin/bash \
+  malkab/postgis_compilation \
+  [{docker_image_tag}]

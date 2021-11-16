@@ -8,6 +8,7 @@ LABEL email="jp.perez.alcantara@gmail.com"
 ARG PG_VERSION
 ARG GEOS_VERSION
 ARG PROJ_VERSION
+ARG PROJ_DATA_VERSION
 ARG GDAL_VERSION
 ARG POSTGIS_VERSION
 
@@ -15,6 +16,7 @@ ARG POSTGIS_VERSION
 ENV PG_VERSION $PG_VERSION
 ENV GEOS_VERSION $GEOS_VERSION
 ENV PROJ_VERSION $PROJ_VERSION
+ENV PROJ_DATA_VERSION $PROJ_DATA_VERSION
 ENV GDAL_VERSION $GDAL_VERSION
 ENV POSTGIS_VERSION $POSTGIS_VERSION
 ENV DEBIAN_FRONTEND noninteractive
@@ -24,17 +26,12 @@ ENV PROJ_LIB /usr/local/share/proj
 WORKDIR /usr/local/src/
 
 ADD packages/postgis_compile.sh /usr/local/src/
-
 ADD packages/export_binaries.sh /usr/local/src/
-
 ADD packages/postgresql/ /usr/local/src/postgresql
-
 ADD packages/geos/ /usr/local/src/geos
-
 ADD packages/proj/ /usr/local/src/proj
-
+ADD packages/proj-data/ /usr/local/src/proj-data
 ADD packages/gdal/ /usr/local/src/gdal
-
 ADD packages/postgis/ /usr/local/src/postgis
 
 # Compilation

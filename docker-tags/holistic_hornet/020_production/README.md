@@ -1,4 +1,4 @@
-# Compilation of PostgreSQL 13.2, PostGIS 3.1.1, GDAL 3.2.1
+# Docker Image for PostgreSQL 13.5, PostGIS 3.1.4, GDAL 3.2.3
 
 This image is intended for production.
 
@@ -7,15 +7,15 @@ This image is intended for production.
 
 This image is created with the binaries compiled by the **compilation** image and includes full binaries and assets for the following software:
 
-- **PostgreSQL 13.2;**
+- **PostgreSQL 13.5;**
 
-- **GEOS 3.9.1;**
+- **GEOS 3.9.2;**
 
 - **Proj 7.2.1;**
 
-- **GDAL 3.2.2;**
+- **GDAL 3.2.3;**
 
-- **PostGIS 3.1.1;**
+- **PostGIS 3.1.4;**
 
 - **Python 3:** to be used as PL/Python language version.
 
@@ -27,7 +27,7 @@ Regarding Spanish transformations, specially those concerning Andalusia, this im
 
 ## Image Creation
 
-Compile software from source by running the **compilation** image and extract binaries as described in its **README**. Then build this image:
+Compile software from source by running the **compilation** image. With the **default context** active, build this image:
 
 ```Shell
 010_docker_build.sh
@@ -84,7 +84,7 @@ Default LANG is **en_US.UTF-8**.
 
 ## Image Infrastructure
 
-The image exposes port **5432** and volume **/data**. **data** is the datastore, where logs are located at **pg_log** folder. **postgres** user, which runs the server, has UID and GID 1500.
+The image exposes port **5432** and volume **/data**. **data** is the datastore, where logs are located at **pg_log** folder. **postgres** user, which runs the server, has UID and GID 1000, and this cannot be changed.
 
 
 ## Container Creation
@@ -97,7 +97,7 @@ The container will check if there is a datastore initiated at **/data**. If not,
 
 ## User Mapping
 
-The internal **postgres** user, which runs the server (root can't do that), UID and GID are fixed to 1000:1000 and this is hard to change. To run the **psql**, the image defines UID/GID from 1000 to 1004 for Linux and 500:504 for Mac. The user can be selected with env vars **POSTGRESUSERID** and **POSTGRESGROUPID**.
+For the internal **postgres** user, which runs the server (root can't do that), UID and GID are fixed to 1000:1000 and this is not configurable. To run **psql** sessions (there is a **run_psql.sh** script available to launch them automatically), the image defines UID/GID from 1000 to 1004 for Linux and 500:504 for Mac. The user can be selected with the standard **--user UID:GID** Docker's switch .
 
 
 ## Script Database Initialization
@@ -116,6 +116,20 @@ This script is only executed once, when the empty datastore is created.
 ## Data Persistence
 
 Datastore data can be persisted in a data volume or host mounted folder and be used later by another container. The container checks if folder **/data/** is empty or not. If not, considers the datastore to be not created and creates an empty one.
+
+
+## psql Script
+
+The image contains a script called **run_psql.sh** that runs a PSQL session based on several ENV VARS:
+
+- **HOST:** DB host, defaults to **localhost**;
+- **PORT:** DB port, defaults to **5432**;
+- **USER:** DB user, defaults to **postgres**;
+- **PASS:** DB user's password, defaults to **postgres**;
+- **DB:** DB to connect to;
+- **SCRIPT:** a script file (mounted externally in a volume or something) to execute;
+- **COMMAND:** a command to execute;
+- **OUTPUT_FILES:** the output file to dump execution to.
 
 
 ## Configuring the Data Store
@@ -211,7 +225,7 @@ Several tests can be run by launching **test-custom_image_with_script/docker-bui
 
 ## Usage Examples
 
-Several usage examples. Use the Docker configuration scripts at the **030_docker_scripts** folder to run fully configured instances of this image and launch PSQL sessions on them.
+Several usage examples.
 
 Simple run:
 
@@ -222,7 +236,7 @@ docker run -ti --rm \
   malkab/postgis:holistic_hornet
 ```
 
-Custom run, mapping the user owner of the data warehouse:
+Custom configurations mounted from local files (for development, for example):
 
 ```Shell
 docker run -ti --rm \
@@ -230,8 +244,6 @@ docker run -ti --rm \
   -p 5432:5432 \
   -e "LANG=es_ES.UTF-8" \
   -e "PASSWORD=thepass" \
-  -e "POSTGRESUSERID=1004" \
-  -e "POSTGRESGROUPID=1009" \
   -v $(pwd)/postgresql-c:/default_confs/postgresql.conf \
   -v $(pwd)/pg_hba-c:/default_confs/pg_hba.conf \
   malkab/postgis:holistic_hornet
@@ -243,8 +255,7 @@ Custom psql command run, mapping the user to 1000:1000:
 docker run -ti --rm \
   --network="host" \
   --entrypoint /bin/bash \
-  -e "POSTGRESUSERID=1000" \
-  -e "POSTGRESGROUPID=1000" \
+  --user 1000:1000 \
   malkab/postgis:holistic_hornet \
   -c "psql -h localhost -p 8888 -U postgres postgres"
 ```

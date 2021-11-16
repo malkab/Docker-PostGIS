@@ -1,0 +1,16 @@
+docker_image_tag: holistic_hornet
+# Only with 2 version numbers
+pg_version: 13.5
+proj_data_version: 1.7
+# Three version number from here
+geos_version: 3.9.2
+proj_version: 7.2.1
+gdal_version: 3.2.3
+postgis_version: 3.1.4
+
+ssh:
+  host:
+  user:
+  port:
+  remote_folder:
+  pem:

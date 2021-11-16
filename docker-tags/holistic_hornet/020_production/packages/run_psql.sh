@@ -1,3 +1,9 @@
 #!/bin/bash
 
-PGPASSWORD=${PASS_F} exec gosu $(id -un $POSTGRESUSERID) psql -h ${HOST_F} -p ${PORT_F} -U ${USER_F} ${DB_F} ${SCRIPT} ${COMMAND} ${OUTPUT_FILES_F}
+# Runs a psql session based on the ENV VARS passed to Docker
+
+PGPASSWORD=${PASS} psql \
+  -h ${HOST} \
+  -p ${PORT} \
+  -U ${USER} \
+  ${DB} ${SCRIPT} ${COMMAND} ${OUTPUT_FILES}

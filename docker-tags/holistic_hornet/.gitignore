@@ -1,2 +1,9 @@
-# Added by mlkctxt - v1.1.4
+# Added by mlkctxt - v2.0.0
 # -------------------
+010_compilation/010_docker_build.sh
+010_compilation/020_docker_bash_dev.sh
+010_compilation/030_docker_get_binaries.sh
+020_production/010_docker_build.sh
+020_production/017_docker_psql.sh
+020_production/test_custom_image_with_script/020_docker_psql.sh
+020_production/test_custom_image_with_script/Dockerfile

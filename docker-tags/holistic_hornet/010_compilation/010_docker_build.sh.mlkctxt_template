@@ -4,7 +4,8 @@
 
 # -----------------------------------------------------------------
 #
-# Builds the production image.
+# Builds the compilation image from all code bases. This image will the base for
+# creating the production one.
 #
 # -----------------------------------------------------------------
 #
@@ -13,26 +14,24 @@
 # -----------------------------------------------------------------
 # Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCTXT=common
+MATCH_MLKCTXT=
 # The name of the image to build. Mandatory.
-IMAGE_NAME=malkab/postgis
+IMAGE_NAME=malkab/postgis_compilation
 # The tags. An array of tags in the form (tagA tagB) to create as many images
 # as tags. Defaults to (latest).
-IMAGE_TAGS=(holistic_hornet latest)
+IMAGE_TAGS=([{docker_image_tag}])
 # Dockerfile.
 DOCKERFILE=.
 # Build args, an array of (ARG_NAME=ARG_VALUE ARG_NAME=ARG_VALUE) structure
 # to add --build-arg parameters to the build. Defaults to ().
 BUILD_ARGS=(
-  PG_VERSION=$MLKC_PG_VERSION
-  GEOS_VERSION=$MLKC_GEOS_VERSION
-  PROJ_VERSION=$MLKC_PROJ_VERSION
-  GDAL_VERSION=$MLKC_GDAL_VERSION
-  POSTGIS_VERSION=$MLKC_POSTGIS_VERSION
+  PG_VERSION=[{pg_version}]
+  GEOS_VERSION=[{geos_version}]
+  PROJ_VERSION=[{proj_version}]
+  PROJ_DATA_VERSION=[{proj_data_version}]
+  GDAL_VERSION=[{gdal_version}]
+  POSTGIS_VERSION=[{postgis_version}]
 )
-
-# Copy binaries from 010_compilation
-cp -R ../010_compilation/binaries ./packages
 
 
 

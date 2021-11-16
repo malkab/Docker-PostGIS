@@ -4,8 +4,7 @@
 
 # -----------------------------------------------------------------
 #
-# Builds the compilation image from all code bases. This image will the base for
-# creating the production one.
+# Builds the production image.
 #
 # -----------------------------------------------------------------
 #
@@ -14,23 +13,29 @@
 # -----------------------------------------------------------------
 # Check mlkctxt to check. If void, no check will be performed. If NOTNULL,
 # any activated context will do, but will fail if no context was activated.
-MATCH_MLKCTXT=common
+MATCH_MLKCTXT=
 # The name of the image to build. Mandatory.
-IMAGE_NAME=malkab/postgis_compilation
+IMAGE_NAME=malkab/postgis
 # The tags. An array of tags in the form (tagA tagB) to create as many images
 # as tags. Defaults to (latest).
-IMAGE_TAGS=(holistic_hornet)
+IMAGE_TAGS=([{docker_image_tag}] latest)
 # Dockerfile.
 DOCKERFILE=.
 # Build args, an array of (ARG_NAME=ARG_VALUE ARG_NAME=ARG_VALUE) structure
 # to add --build-arg parameters to the build. Defaults to ().
 BUILD_ARGS=(
-  PG_VERSION=$MLKC_PG_VERSION
-  GEOS_VERSION=$MLKC_GEOS_VERSION
-  PROJ_VERSION=$MLKC_PROJ_VERSION
-  GDAL_VERSION=$MLKC_GDAL_VERSION
-  POSTGIS_VERSION=$MLKC_POSTGIS_VERSION
+  PG_VERSION=[{pg_version}]
+  GEOS_VERSION=[{geos_version}]
+  PROJ_VERSION=[{proj_version}]
+  GDAL_VERSION=[{gdal_version}]
+  POSTGIS_VERSION=[{postgis_version}]
 )
+
+# Get binaries from the compilation image
+docker run -ti --rm \
+    -v $(pwd)/packages:/ext-out/ \
+    --user 1000:1000 \
+    malkab/postgis_compilation:[{docker_image_tag}]
 
 
 

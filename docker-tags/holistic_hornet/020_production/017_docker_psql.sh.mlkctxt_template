@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mlkdckpsql \
+  -u 1000:1000 \
+  -n container:docker_postgis_test \
+  -w $(pwd) \
+  -v $(pwd):$(pwd) \
+  [{docker_image_tag}]

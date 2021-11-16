@@ -1,5 +1,5 @@
 name: docker-postgis
-root: /home/git/docker-public/docker-public-postgis
+root: /home/git/docker/docker-postgis
 
 windows:
-  - docker-postgis: cd . ; sleep 0.5 ; clear
+  - docker-postgis: sleep 0.5 ; clear
