@@ -1,0 +1,8 @@
+FROM malkab/postgis:[{docker_image_tag}]
+
+ENV PASSWORD=aaa
+ENV LANG=en_US.UTF-8
+
+ADD assets/initdb.sh /
+ADD assets/tests.sql /
+ADD assets/postgis_test.sql /

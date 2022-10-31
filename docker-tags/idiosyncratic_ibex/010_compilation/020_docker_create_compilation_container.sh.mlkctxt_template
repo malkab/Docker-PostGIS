@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# Runs a session inside the compilation image for compiling.
+#
+# -----------------------------------------------------------------
+docker run -ti \
+  --name postgis_compilation_[{docker_image_tag}] \
+  --hostname postgis_compilation_[{docker_image_tag}] \
+  -v $(pwd):$(pwd) \
+  -v $(pwd)/exported_binaries:/ext-out \
+  --workdir $(pwd) \
+  malkab/postgis_compilation:[{docker_image_tag}]

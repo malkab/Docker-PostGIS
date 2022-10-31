@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# Removes the compilation image.
+#
+# -----------------------------------------------------------------
+docker rmi malkab/postgis_compilation:[{docker_image_tag}]

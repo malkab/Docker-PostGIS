@@ -1,0 +1,15 @@
+docker_image_tag: idiosyncratic_ibex
+# Only with 2 version numbers
+pg_version: 15.0
+# Three version number from here
+geos_version: 3.11.0
+proj_version: 9.1.0
+gdal_version: 3.5.2
+postgis_version: 3.3.1
+
+ssh:
+  host: kepler
+  user: malkab
+  port: 22
+  remote_folder: /home/apps/docker-postgis-build
+  pem:
