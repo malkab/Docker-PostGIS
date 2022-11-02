@@ -2,9 +2,9 @@
 
 This image is not intended for production, nor to upload it to any registry. It's an image to compile from source a PostGIS, take the binaries and build with them a production-ready Docker image (check **020_production** image). It uses a non-volatile container where the building process (which may change between versions) can be tested and time-consuming building steps be made persistable.
 
-This also serves as the base image for the **docker-grass** series of images that installs GRASS and a big deal of other software to create a super geodata scientist processing image. Image tags of **docker-grass** mimics the one on this repo.
+This image also serves as the base image for the **docker-grass** series of images that installs GRASS and a big deal of other software to create a super geodata scientist processing image. Image tags of **docker-grass** mimics the one on this repo.
 
-**WARNING:** this build seems not to be able to reproject from ED50 to ETRS89 using the spanish transformation grids for all transformations. PROJ seems to be doing it right, but GDAL and PostGIS not. Do not use this image for precision reprojecting in all scenarios, test it first.
+**WARNING:** this build seems not to be able to reproject from ED50 to ETRS89 using the spanish transformation grids for all transformations. Check if PostGIS is able to perform the transformation correctly for a given datum shift. The most common transformations are taken into account.
 
 
 ## Versions
@@ -32,32 +32,25 @@ Please note that **PostgreSQL** version scheme has two version numbers, while th
 
 Then, update **mlkctxt** with the versions and the new image tag and activate the **default** context.
 
-Then follow the scripts. This will create an image that compiles and installs the full software stack into a **postgis_compilation:[postgis_tag]**:
+Then follow the scripts. This will create an image that installs all the assets needed for testing and validating the build process is a persistent way:
 
-- [x] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote;
+- [] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote;
 
-- [x] activate the **default** context. Review the produced BASH scripts because sometimes minor versions are sometimes missed;
+- [] activate the **default** context. Review the produced BASH scripts because sometimes minor versions are sometimes missed;
 
 - [] **rsync** to remote and **ssh**, if applicable;
 
-- [x] run **010** to create an image called **malkab/postgis_compilation:XXX** with all the assets to test and produce the compilation of the stack;
+- [] run **010** to create an image called **malkab/postgis_compilation:XXX** with all the assets to test and produce the compilation of the stack;
 
-- [x] create a non-volatile container to test the compilation with **020** that will be named **postgis_compilation_XXX**. This container is very important because it will store the result of compilation processes that are very time consuming and that will be used to extract the binaries for production. Exit and reenter to it with **030**;
+- [] create a non-volatile container to test the compilation with **020** that will be named **postgis_compilation_XXX**. This container is very important because it will store the result of compilation processes that are very time consuming and that will be used to extract the binaries for production. Exit and reenter to it with **030**;
 
-- [x] once inside the container compilation work can start. Execution of scripts at **build_scripts** can be used to try a unassissted compilation of the full stack, or try it step by step. Don't drop the compilation container to keep already successfull steps;
+- [] once inside the container compilation work can start. Execution of scripts at **build_scripts** can be used to try a unassissted compilation of the full stack, or try it step by step. Don't drop the compilation container to keep already successfull steps;
 
-- [x] run **030** and inside **tests/cs2cs.sh** to check datum shiftings;
+- [] run **030** and inside **tests/cs2cs.sh** to check datum shiftings;
 
-- [x] extract binaries in **030** with **900**. This will create a **exported_binaries** folder containing all that the production image needs;
+- [] extract binaries in **030** with **900**. This will create a **exported_binaries** folder containing all that the production image needs;
 
-- [x] proceed to **020_production**.
-
-
-## Testing new Compilations Workflows
-
-To test new compilations workflows, first modify the **packages/postgis_compile.sh** script that compiles the full stack. Most probably the file will be commented, except for the first part that installs package dependencies and creates an start up environment with all the source code copied and relevant packages installed.
-
-Run the interactive environment with **020_docker_bash_dev.sh** and test new compilations workflows, scripting them back to **postgis_compile.sh** when they are ready and tested.
+- [] proceed to **020_production**.
 
 
 ## A note on Datum Shifting

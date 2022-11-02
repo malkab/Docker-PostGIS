@@ -1,11 +1,11 @@
-# Docker Image for PostgreSQL 13.5, PostGIS 3.1.4, GDAL 3.2.3
+# Docker Image for PostgreSQL 15.0, PostGIS 3.3.1, GDAL 3.5.2
 
 This image is intended for production.
 
 
 ## Versions
 
-This image is created with the binaries compiled by the **compilation** image and includes full binaries and assets for the following software:
+This image is created with the binaries compiled by the **compilation** image (see **010_compilation**) and includes full binaries and assets for the following software:
 
 - PostgreSQL 15.0;
 
@@ -24,7 +24,9 @@ Also check the version of the **Docker Ubuntu base image** in the **Dockerfile**
 
 ## Datum Shifting
 
-Regarding Spanish transformations, specially those concerning Andalusia, this image contains PROJ, GDAL, and PostGIS, all of them systems capable of shifting coordinates accurately using the IGN's grid from ED50 to ETRS89 for UTM zones 30 and 31. Other transformations are not covered by the grid.
+Regarding Spanish transformations, specially those concerning Andalusia, this image contains PROJ, GDAL, and PostGIS, all of them systems capable of shifting coordinates accurately using the IGN's grid from ED50 to ETRS89 for UTM zones 30 and 31. Other transformations are not covered by the grid. See **notes about datum shifting** below.
+
+Most common transformations are accurate, but others not. Check if a given transformation is precise with the help of the [**Calculadora Geodésica** from IGN](https://www.ign.es/web/calculadora-geodesica).
 
 
 ## Image Pull
@@ -32,27 +34,29 @@ Regarding Spanish transformations, specially those concerning Andalusia, this im
 Pull it from Docker Hub:
 
 ```Shell
-docker pull malkab/postgis:holistic_hornet
+docker pull malkab/postgis:idiosyncratic_ibex
 ```
 
 
 ## Image Creation
 
-Compile software from source by running the **compilation** image. With the **default context** active, **rsync** if needed, and build this image:
+Compile software from source by running the **compilation** image as described in **010_compilation**. With the **default context** active, **rsync** if needed, and build this image:
 
-- [x] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote (most probably already done in the compilation section);
+- [] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote (most probably already done in the compilation section);
 
-- [x] activate the **default** context (check for generated script because mlkctxt drops .0 values);
+- [] activate the **default** context (check for generated script because mlkctxt drops .0 values);
 
-- [x] rsync to remote and ssh, if applicable;
+- [] rsync to remote and ssh, if applicable;
 
-- [x] build with **010**;
+- [] build with **010**;
 
 - [] start a test instance with **015** and test a psql session with **017**;
 
 - [] test with the assets at **test_custom_image_with_scripts**. This will test PostGIS and datum shiftings;
 
-- [] finally push with **020**.
+- [] push with **020**;
+
+- [] finally, don't forget to check the **README.md's** in **010**, **020**, and the repo top one (add a new entry for the new tag). It is advisable to look for the last image tag to check typos in the current tag documentation.
 
 
 ## Locales
@@ -116,7 +120,7 @@ Remember that the datastore must adhere to some critical rules:
 
 ## User Mapping
 
-For the internal **postgres** user, which runs the server (root can't do that), UID and GID are fixed to 1000:1000 and this is not configurable. To run **psql** sessions (there is a **run_psql.sh** script available to launch them automatically), the image defines UID/GID from 1000 to 1004 for Linux and 500:504 for Mac. The user can be selected with the standard **--user UID:GID** Docker's switch .
+For the internal **postgres** user, which runs the server (root can't do that), UID and GID are fixed to 1000:1000 and this is not configurable. To run **psql** sessions (there is a **run_psql.sh** script available to launch them automatically), the image defines UID/GID from 1000 to 1004 for Linux and 500:504 for Mac. The user can be selected with the standard **--user UID:GID** Docker's switch.
 
 
 ## Script Database Initialization
@@ -203,6 +207,7 @@ This configurations are suitable for development, with very conservative setting
 
 ```txt
 -v $(pwd)/postgresql-c:/default_confs/postgresql.conf
+-v $(pwd)/pg_hba-c:/default_confs/pg_hba.conf
 ```
 
 Logs are stored at **$POSTGRES_DATA_FOLDER/pg_log**.
@@ -252,7 +257,7 @@ Simple run:
 docker run -ti --rm \
   -v `pwd`/:/ext-out/ \
   -p 5432:5432 \
-  malkab/postgis:holistic_hornet
+  malkab/postgis:idiosyncratic_ibex
 ```
 
 Custom configurations mounted from local files (for development, for example):
@@ -265,16 +270,49 @@ docker run -ti --rm \
   -e "PASSWORD=thepass" \
   -v $(pwd)/postgresql-c:/default_confs/postgresql.conf \
   -v $(pwd)/pg_hba-c:/default_confs/pg_hba.conf \
-  malkab/postgis:holistic_hornet
+  malkab/postgis:idiosyncratic_ibex
 ```
 
 Custom psql command run, mapping the user to 1000:1000:
 
 ```Shell
 docker run -ti --rm \
-  --network="host" \
-  --entrypoint /bin/bash \
+  --name testpostgis-deleteme_psql \
+  --network=container:testpostgis-deleteme \
   --user 1000:1000 \
-  malkab/postgis:holistic_hornet \
-  -c "psql -h localhost -p 8888 -U postgres postgres"
+  -v $(pwd):$(pwd) \
+  --workdir $(pwd) \
+  -e "HOST=localhost" \
+  -e "PORT=5432" \
+  -e "DB=postgres" \
+  -e "USER=postgres" \
+  -e "PASS=aaa" \
+  --entrypoint /bin/bash \
+  malkab/postgis:idiosyncratic_ibex \
+  -c run_psql.sh
 ```
+
+
+## A note on Datum Shifting
+
+The PROJ version installed comes with the Spanish National Grids for datum shifting between ED50 and ETRS89. However, it has been tested to work only in these transformations:
+
+- **ED50 UTM30N (EPSG:23030) to ETRS89 UTM30N (EPSG:25830)**;
+
+- **ED50 UTM31N (EPSG:23031) to ETRS89 UTM31N (EPSG:25831)**.
+
+Other transformations won't work with the current grid.
+
+To test datum shifting, use the following coordinate transformations, performed by the IGN's geodesic calculator:
+
+- **EPSG:23028 to EPSG:25828:** 235200 4142110  >  235076.64 4141872.38
+
+- **EPSG:23029 to EPSG:25829:** 235200 4142110  >  235086.89 4141884.24
+
+- **EPSG:23030 to EPSG:25830:** 235200 4142110  >  235088.76 4141905.91
+
+- **EPSG:23031 to EPSG:25831:** 235200 4142110  >  235103.57 4141908.03
+
+- **EPSG:4230 to EPSG:4258:**   5 37            >  5.00131943 36.99873538
+
+Use the **tests/cs2cs.sh** script to test different transformations.
