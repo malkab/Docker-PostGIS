@@ -56,7 +56,9 @@ Compile software from source by running the **compilation** image as described i
 
 - [] push with **020**;
 
-- [] finally, don't forget to check the **README.md's** in **010**, **020**, and the repo top one (add a new entry for the new tag). It is advisable to look for the last image tag to check typos in the current tag documentation.
+- [] don't forget to check the **README.md's** in **010**, **020**, and the repo top one (add a new entry for the new tag). It is advisable to look for the last image tag to check typos in the current tag documentation;
+
+- [] when ready, add to the repo a tag in the shape **tag-vX.X.X**, like **idiosyncratic_ibex-v1.0.0**.
 
 
 ## Locales
