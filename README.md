@@ -5,12 +5,14 @@ This repository contains Docker image builds for PostgreSQL / PostGIS. This is t
 
 ## How to Create New Versions
 
-In most scenarios is just enough to update packages at **compilation/packages**, carefully changing versions in folder names, and then changing the same versions at **env.env**. Then change both README.md from compilation and production, searching for the **:tag_name** string to change the template one with the current tag. Also add an entry below for the new tag. Additional configurations may be necessary in some cases, check the **README.md** for details. Please use the **endangered_equidna** image definition as a template, the rest are not fully parametrized.
+Copy the latest version tag, give it another name, and configure following instructions at **README.md**.
 
 
 ## Quick Tags Overview
 
 Please refer to each tag README.md for full details. To get a quick overview over tags capabilities:
+
+- **jelly_jealous:** released 2023-08-02. Versions are: PostgreSQL 15.3, GEOS 3.12.0, Proj 9.2.1, GDAL 3.7.1, PostGIS 3.3.4, and Python 3 as PL/Python language. The compilation image of this repo is the base for the compilation of the GRASS image of the same tag.
 
 - **idiosyntratic_ibex:** released 2022-11-02. Versions are: PostgreSQL 15.0, GEOS 3.11.0, Proj 9.1.0, GDAL 3.5.2, PostGIS 3.3.1, and Python 3 as PL/Python language. The compilation image of this repo is the base for the compilation of the GRASS image of the same tag.
 

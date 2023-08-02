@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# Starts and attach to a compiler container.
+#
+# -----------------------------------------------------------------
+docker start -ai postgis_compilation_[{docker_image_tag}]

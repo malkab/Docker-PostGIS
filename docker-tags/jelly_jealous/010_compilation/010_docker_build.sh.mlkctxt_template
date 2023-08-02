@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------
+#
+# Hace el build de una imagen con todos los assets para
+# testear y hacer la compilación.
+#
+# -----------------------------------------------------------------
+docker build \
+  -t malkab/postgis_compilation:[{docker_image_tag}] \
+  --build-arg PG_VERSION=[{pg_version}] \
+  --build-arg GEOS_VERSION=[{geos_version}] \
+  --build-arg PROJ_VERSION=[{proj_version}] \
+  --build-arg GDAL_VERSION=[{gdal_version}] \
+  --build-arg POSTGIS_VERSION=[{postgis_version}] \
+  .
