@@ -50,6 +50,8 @@ Then follow the scripts. This will create an image that installs all the assets 
 
 - [] extract binaries in **030** with **build_scripts/900**. This will place in **exported_binaries** folder containing all that the production image needs;
 
+- [] **DON'T** drop this compilation image if a GRASS image is going to be built upon it, for it is used as the base image for GRASS compilation;
+
 - [] proceed to **020_production**.
 
 
