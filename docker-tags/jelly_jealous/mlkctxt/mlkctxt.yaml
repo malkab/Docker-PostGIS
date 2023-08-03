@@ -1,14 +1,17 @@
 # Image tag
 docker_image_tag: jelly_jealous
 
+# The tag of the Ubuntu base image
+ubuntu_base_tag: "20.04"
+
 # Only with 2 version numbers
-pg_version: 15.3
+pg_version: "15.3"
 
 # Three version number from here
-gdal_version: 3.7.1
-geos_version: 3.12.0
-postgis_version: 3.3.4
-proj_version: 9.2.1
+gdal_version: "3.7.1"
+geos_version: "3.12.0"
+postgis_version: "3.3.4"
+proj_version: "9.2.1"
 
 # For remote building
 ssh:
