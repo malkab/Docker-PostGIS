@@ -2,7 +2,7 @@
 docker_image_tag: jelly_jealous
 
 # The tag of the Ubuntu base image
-ubuntu_base_tag: "20.04"
+ubuntu_base_tag: "22.04"
 
 # Only with 2 version numbers
 pg_version: "15.3"
