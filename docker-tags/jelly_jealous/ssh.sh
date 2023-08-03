@@ -32,31 +32,31 @@ AWS_PEM=$(mlkp ssh.pem)
 # Check mlkctxt
 if command -v mlkctxt &> /dev/null ; then
 
-  mlkctxtcheck $MATCH_MLKCTXT
+    mlkctxtcheck $MATCH_MLKCTXT
 
-  if [ ! $? -eq 0 ] ; then
+    if [ ! $? -eq 0 ] ; then
 
-    echo Invalid context set, required $MATCH_MLKCTXT
+      echo Invalid context set, required $MATCH_MLKCTXT
 
-    exit 1
+      exit 1
 
-  fi
+    fi
 
 fi
 
 # User
 if [ -z $USER ] ; then
 
-  echo USER is mandatory, exiting...
-  exit 1
+    echo USER is mandatory, exiting...
+    exit 1
 
 fi
 
 # User
 if [ -z $HOST ] ; then
 
-  echo HOST is mandatory, exiting...
-  exit 1
+    echo HOST is mandatory, exiting...
+    exit 1
 
 fi
 

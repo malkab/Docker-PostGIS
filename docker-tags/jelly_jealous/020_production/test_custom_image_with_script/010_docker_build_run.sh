@@ -8,11 +8,11 @@ rm -Rf data
 docker build -t=testpostgis-deleteme .
 
 docker run -ti --rm \
-  -p 8888:5432 \
-  -v $(pwd)/../../:/ext-src \
-  -v $(pwd)/data/:/data \
-  --workdir / \
-  --name testpostgis-deleteme \
-  testpostgis-deleteme
+    -p 8888:5432 \
+    -v $(pwd)/../../:/ext-src \
+    -v $(pwd)/data/:/data \
+    --workdir / \
+    --name testpostgis-deleteme \
+    testpostgis-deleteme
 
 docker rmi testpostgis-deleteme

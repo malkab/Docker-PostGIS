@@ -2,9 +2,7 @@
 
 # Compilation of PostGIS
 
-cd /usr/local/src/postgis
-tar -xvf postgis-$POSTGIS_VERSION.tar.gz
-cd postgis-$POSTGIS_VERSION
+cd /usr/local/src/postgis-$POSTGIS_VERSION
 
 echo
 echo ---------------------------------------

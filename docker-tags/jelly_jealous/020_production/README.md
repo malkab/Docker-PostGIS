@@ -42,7 +42,7 @@ docker pull malkab/postgis:jelly_jealous
 
 Compile software from source by running the **compilation** image as described in **010_compilation**. With the **default context** active, **rsync** if needed, and build this image:
 
-- [] modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote (most probably already done in the compilation section);
+- [] if not done at the compilation process, modify the **mlkctxt.yaml** with versions and ssh credentials if going to build on remote;
 
 - [] activate the **default** context (check for generated script because mlkctxt drops .0 values);
 
@@ -50,15 +50,15 @@ Compile software from source by running the **compilation** image as described i
 
 - [] build with **010**;
 
-- [] start a test instance with **015** and test a psql session with **017**;
+- [] start a test instance with **020** and test a psql session with **030**;
 
 - [] test with the assets at **test_custom_image_with_scripts**. This will test PostGIS and datum shiftings;
 
-- [] push with **020**;
+- [] push with **050**;
 
 - [] don't forget to check the **README.md's** in **010**, **020**, and the repo top one (add a new entry for the new tag). It is advisable to look for the last image tag to check typos in the current tag documentation;
 
-- [] clean residual Docker images;
+- [] clean residual Docker images if needed (mind the GRASS image);
 
 - [] when ready, add to the repo a tag in the shape **tag-vX.X.X**, like **jelly_jealous-v1.0.0**.
 

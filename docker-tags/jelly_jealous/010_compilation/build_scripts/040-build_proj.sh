@@ -2,11 +2,8 @@
 
 # Compilation of Proj
 
-cd /usr/local/src/proj
+cd /usr/local/src/proj-$PROJ_VERSION
 
-tar -xvf proj-$PROJ_VERSION.tar.gz
-
-cd proj-$PROJ_VERSION
 mkdir build
 cd build
 

@@ -38,6 +38,8 @@ Then follow the scripts. This will create an image that installs all the assets 
 
 - [] activate the **default** context. Review the produced BASH scripts because sometimes minor versions are sometimes missed;
 
+- [] at the **Dockerfile.mlkctxt_template**, check if there is a more recent Ubuntu LTS base image to work with and update (https://wiki.ubuntu.com/Releases, https://hub.docker.com/_/ubuntu);
+
 - [] **rsync** to remote and **ssh**, if applicable;
 
 - [] run **010** to create an image called **malkab/postgis_compilation:XXX** with all the assets to test and produce the compilation of the stack;
@@ -46,11 +48,11 @@ Then follow the scripts. This will create an image that installs all the assets 
 
 - [] once inside the container compilation work can start. Execution of scripts at **build_scripts** can be used to try a unassissted compilation of the full stack, or try it step by step. Don't drop the compilation container to keep already successfull steps;
 
-- [] run **030** and inside **tests/cs2cs.sh** to check datum shiftings;
+- [] run inside the container **tests/cs2cs.sh** to check datum shiftings;
 
-- [] extract binaries in **030** with **build_scripts/900**. This will place in **exported_binaries** folder containing all that the production image needs;
+- [] extract binaries inside the container with **build_scripts/900**. This will place in **exported_binaries** folder containing all that the production image needs;
 
-- [] **DON'T** drop this compilation image if a GRASS image is going to be built upon it, for it is used as the base image for GRASS compilation;
+- [] fix the compilation process at the container in an image. Exit the container and run **050**. A new image called **malkab/postgis_compilation_final:xxx** will be created. This is useful to further process other images like the GRASS one. **DON'T** drop this compilation image;
 
 - [] proceed to **020_production**.
 

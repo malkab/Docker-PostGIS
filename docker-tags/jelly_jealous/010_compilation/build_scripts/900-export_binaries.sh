@@ -14,3 +14,6 @@ mkdir -p exported_binaries/binaries
 cp --parents -r /usr/local/bin/ $(pwd)/exported_binaries/binaries
 cp --parents -r /usr/local/lib/ $(pwd)/exported_binaries/binaries
 cp --parents -r /usr/local/share/ $(pwd)/exported_binaries/binaries
+
+# Change permissions to 1000:1000
+chown -R 1000:1000 exported_binaries

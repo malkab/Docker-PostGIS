@@ -2,11 +2,8 @@
 
 # Compilation of GDAL
 
-cd /usr/local/src/gdal
+cd /usr/local/src/gdal-$GDAL_VERSION
 
-tar -xvf gdal-$GDAL_VERSION.tar.gz
-
-cd gdal-$GDAL_VERSION
 mkdir build
 cd build
 

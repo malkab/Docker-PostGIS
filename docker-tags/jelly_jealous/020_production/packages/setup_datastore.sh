@@ -86,27 +86,27 @@ su postgres -c "cp /default_confs/postgresql.conf /data/"
 # Check if there is a /initdb.sql script to initialize database
 if [ -f /initdb.sh ]; then
 
-  echo
-  echo -----------------------------
-  echo Setup script found, executing...
-  echo
-  echo Starting server...
-  echo -----------------------------
-  echo
+    echo
+    echo -----------------------------
+    echo Setup script found, executing...
+    echo
+    echo Starting server...
+    echo -----------------------------
+    echo
 
-  su postgres -c "pg_ctl -w -D /data/ start"
+    su postgres -c "pg_ctl -w -D /data/ start"
 
-  chmod 755 /initdb.sh
+    chmod 755 /initdb.sh
 
-  /initdb.sh
+    /initdb.sh
 
-  echo
-  echo -----------------------------
-  echo Stopping server...
-  echo -----------------------------
-  echo
+    echo
+    echo -----------------------------
+    echo Stopping server...
+    echo -----------------------------
+    echo
 
-  su postgres -c "pg_ctl -w -D /data/ stop"
+    su postgres -c "pg_ctl -w -D /data/ stop"
 
 fi
 

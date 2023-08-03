@@ -8,11 +8,7 @@ echo Configuring GEOS
 echo ---------------------------------------
 echo
 
-cd /usr/local/src/geos
-
-tar -xvf geos-$GEOS_VERSION.tar.bz2
-
-cd geos-$GEOS_VERSION
+cd /usr/local/src/geos-$GEOS_VERSION
 
 mkdir build
 cd build

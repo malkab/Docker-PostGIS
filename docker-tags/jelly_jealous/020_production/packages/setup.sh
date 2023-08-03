@@ -10,9 +10,9 @@ apt-get update
 apt-get install -y debconf-utils
 
 apt-get install -y \
-  readline-common \
-  locales \
-  tzdata
+    readline-common \
+    locales \
+    tzdata
 
 # Locales
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
@@ -43,12 +43,12 @@ debconf-set-selections < /keyboard_selections.conf
 
 # Packages
 apt-get install -y \
-  libcurl4 \
-  libjson-c5 \
-  libprotobuf-c1 \
-  libpython3.10 \
-  libtiff5 \
-  libxml2
+    libcurl4 \
+    libjson-c5 \
+    libprotobuf-c1 \
+    libpython3.10 \
+    libtiff5 \
+    libxml2
 
 apt-get -y upgrade
 

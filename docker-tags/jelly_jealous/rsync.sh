@@ -22,13 +22,13 @@ DESTIN_FOLDER=$(mlkp ssh.user)@$(mlkp ssh.host):$(mlkp ssh.remote_folder)
 # Excludes, for example ("a*" "e*" "r*"). Defaults to some commonly excluded
 # files: ".DS_Store rsync*" ".gitignore" ".git" "*.mlkctxt_template"
 EXCLUDES=(
-  .DS_Store rsync*
-  .gitignore
-  .git
-  *.mlkctxt_template
-  ssh*
-  mlkctxt
-  README.md
+    .DS_Store rsync*
+    .gitignore
+    .git
+    *.mlkctxt_template
+    ssh*
+    mlkctxt
+    README.md
 )
 # SSH port. Defaults to 22.
 PORT=$(mlkp ssh.port)
@@ -45,27 +45,27 @@ chmod 755 *.sh
 # Check mlkctxt
 if command -v mlkctxt &> /dev/null ; then
 
-  mlkctxtcheck $MATCH_MLKCTXT
+    mlkctxtcheck $MATCH_MLKCTXT
 
-  if [ ! $? -eq 0 ] ; then
+    if [ ! $? -eq 0 ] ; then
 
-    echo Invalid context set, required $MATCH_MLKCTXT
+        echo Invalid context set, required $MATCH_MLKCTXT
 
-    exit 1
+        exit 1
 
-  fi
+    fi
 
 fi
 
 # Check folders
 if [ -z $SOURCE_FOLDER ] ; then
-  echo SOURCE_FOLDER is mandatory, exiting...
-  exit 1
+    echo SOURCE_FOLDER is mandatory, exiting...
+    exit 1
 fi
 
 if [ -z $DESTIN_FOLDER ] ; then
-  echo DESTIN_FOLDER is mandatory, exiting...
-  exit 1
+    echo DESTIN_FOLDER is mandatory, exiting...
+    exit 1
 fi
 
 # By default, run dry and without delete
@@ -115,21 +115,21 @@ if [ ! -z "${EXCLUDES}" ] ; then EXCLUDES_F=( "${EXCLUDES[@]}" ) ; fi
 
 # Amazon PEM
 if [ ! -z $AWS_PEM ] ; then
-  SSH_OPTIONS="${SSH_OPTIONS} -i ${AWS_PEM}"
+    SSH_OPTIONS="${SSH_OPTIONS} -i ${AWS_PEM}"
 fi
 
 # BEWARE THE DELETE!!!
 if [ "$DELETE" = true ] ; then
-  DELETE="--delete"
+    DELETE="--delete"
 else
-  DELETE=""
+    DELETE=""
 fi
 
 # Dry run
 if [ "$DRY_RUN" = true ] ; then
-  DRY_RUN_F="--dry-run"
+    DRY_RUN_F="--dry-run"
 else
-  DRY_RUN_F=""
+    DRY_RUN_F=""
 fi
 
 # The command
@@ -137,7 +137,7 @@ RSYNC="rsync -avzhr --progress ${DELETE} ${DRY_RUN_F} --rsh=\"ssh ${SSH_OPTIONS}
 
 # Process of excludes
 for EXCLUDE in "${EXCLUDES_F[@]}" ; do
-  RSYNC="${RSYNC} --exclude \"${EXCLUDE}\""
+    RSYNC="${RSYNC} --exclude \"${EXCLUDE}\""
 done
 
 # Command
@@ -146,9 +146,9 @@ eval $RSYNC
 
 # Inform the user
 if [ "$DRY_RUN" = true ] ; then
-  echo "NOTE: this was a dry run"
+    echo "NOTE: this was a dry run"
 fi
 
 if [ "$DELETE" = "--delete" ] ; then
-  echo "WARNING!: this was a delete run"
+    echo "WARNING!: this was a delete run"
 fi

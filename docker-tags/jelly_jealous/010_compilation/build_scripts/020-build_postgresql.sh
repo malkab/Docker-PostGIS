@@ -6,11 +6,7 @@ echo Configuring PostgreSQL
 echo ---------------------------------------
 echo
 
-cd /usr/local/src/postgresql
-
-tar -xvf postgresql-$PG_VERSION.tar.bz2
-
-cd postgresql-$PG_VERSION
+cd /usr/local/src/postgresql-$PG_VERSION
 
 ./configure \
 	--prefix=/usr/local \
