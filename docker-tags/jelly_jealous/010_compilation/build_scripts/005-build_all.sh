@@ -11,4 +11,4 @@
 ./040-build_proj.sh
 ./050-build_gdal.sh
 ./060-build_postgis.sh
-./900-exported_binaries.sh
+./900-export_binaries.sh
