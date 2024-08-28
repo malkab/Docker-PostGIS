@@ -12,11 +12,3 @@ gdal_version: "3.7.1"
 geos_version: "3.12.0"
 postgis_version: "3.3.4"
 proj_version: "9.2.1"
-
-# For remote building
-ssh:
-    host: kepler
-    user: malkab
-    port: 22
-    remote_folder: /home/apps/docker-postgis-build
-    pem:
