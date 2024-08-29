@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load env variables
-. env.sh
+. ../env.sh
 
 echo Building image $DOCKER_IMAGE_TAG
 
@@ -14,3 +14,5 @@ docker build \
     --build-arg PG_VERSION=$PG_VERSION \
     --build-arg PROJ_VERSION=$PROJ_VERSION \
     .
+
+    # --no-cache \

@@ -1,39 +1,36 @@
 #!/bin/bash
 
-# Compilation of PostGIS
+# Compilation of GDAL
 
-cd /usr/local/src/postgis-$POSTGIS_VERSION
+cd /usr/local/src/gdal-$GDAL_VERSION
 
-echo
-echo ---------------------------------------
-echo Configuring PostGIS
-echo ---------------------------------------
-echo
-
-./configure --with-topology --with-raster
+mkdir build
+cd build
 
 echo
 echo ---------------------------------------
-echo Building PostGIS
+echo Configuring GDAL
 echo ---------------------------------------
 echo
 
-make
+cmake .. \
+    -DGDAL_USE_GEOTIFF_INTERNAL=OFF \
+    -DGDAL_USE_PNG_INTERNAL=OFF
 
 echo
 echo ---------------------------------------
-echo Check PostGIS
+echo Building GDAL
 echo ---------------------------------------
 echo
 
-make check
+cmake --build .
 
 echo
 echo ---------------------------------------
-echo Installing PostGIS
+echo Installing GDAL
 echo ---------------------------------------
 echo
 
-make install
+cmake --build . --target install
 
 ldconfig

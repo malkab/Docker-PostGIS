@@ -13,8 +13,6 @@ ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 
 DEBIAN_FRONTEND=noninteractive
 
-apt-get update
-
 apt-get install -y \
 	build-essential \
 	xsltproc \
@@ -43,6 +41,7 @@ apt-get install -y \
 	libjson-c-dev \
 	python3 \
 	python3-distutils \
+	python3-pip \
 	libpython3-dev \
 	libpython3-all-dev \
 	libsqlite3-0 \
@@ -57,7 +56,16 @@ apt-get install -y \
 	libprotobuf-c-dev \
 	libprotobuf-c1 \
 	libpcre3-dev \
-	libpcre3
+	libpcre3 \
+	libopenjp2-7-dev \
+	swig \
+	libgeotiff5 \
+	libgeotiff-dev \
+	libpng-dev \
+	libpng16-16 \
+	python3-numpy \
+	libxml2 \
+	libxml2-utils
 
 dpkg-reconfigure --frontend noninteractive tzdata
 

@@ -1,34 +1,31 @@
 #!/bin/bash
 
-# Compilation of GDAL
+# Compilation of PostGIS
 
-cd /usr/local/src/gdal-$GDAL_VERSION
-
-mkdir build
-cd build
+cd /usr/local/src/postgis-$POSTGIS_VERSION
 
 echo
 echo ---------------------------------------
-echo Configuring GDAL
+echo Configuring PostGIS
 echo ---------------------------------------
 echo
 
-cmake ..
+./configure --with-topology --with-raster
 
 echo
 echo ---------------------------------------
-echo Building GDAL
+echo Building PostGIS
 echo ---------------------------------------
 echo
 
-cmake --build .
+make
 
 echo
 echo ---------------------------------------
-echo Installing GDAL
+echo Installing PostGIS
 echo ---------------------------------------
 echo
 
-cmake --build . --target install
+make install
 
 ldconfig
