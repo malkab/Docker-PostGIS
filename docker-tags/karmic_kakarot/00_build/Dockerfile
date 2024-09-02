@@ -41,4 +41,9 @@ RUN apt-get update && \
 
 # Compile
 WORKDIR /build_scripts
-RUN /build_scripts/005-build_all.sh
+RUN ./010-install_dependencies.sh
+RUN ./020-build_postgresql.sh
+RUN ./030-build_geos.sh
+RUN ./040-build_proj.sh
+RUN ./050-build_gdal.sh
+RUN ./060-build_postgis.sh
