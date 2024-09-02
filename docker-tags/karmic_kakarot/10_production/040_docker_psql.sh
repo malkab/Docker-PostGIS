@@ -8,7 +8,7 @@ docker run -ti --rm \
     --network=container:docker_postgis_test \
     --user 1000:1000 \
     -v $(pwd):$(pwd) \
-    --workdir $(pwd) \
+    --workdir $(pwd)/tests \
     -e "HOST=localhost" \
     -e "PORT=5432" \
     -e "DB=postgres" \

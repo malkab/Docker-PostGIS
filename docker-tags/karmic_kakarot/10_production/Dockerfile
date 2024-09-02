@@ -114,10 +114,15 @@ COPY --from=malkab/postgis_build:latest /usr/local/lib/postgresql/* /usr/local/l
 COPY --from=malkab/postgis_build:latest /usr/local/bin/pg_ctl /usr/local/bin/pg_ctl
 COPY --from=malkab/postgis_build:latest /usr/local/bin/psql /usr/local/bin/psql
 COPY --from=malkab/postgis_build:latest /usr/lib/x86_64-linux-gnu/libreadline.so* /usr/lib/x86_64-linux-gnu/
-COPY --from=malkab/postgis_build:latest /usr/lib/x86_64-linux-gnu/libreadline.so* /usr/lib/x86_64-linux-gnu/
+COPY --from=malkab/postgis_build:latest /usr/local/lib/postgresql/postgis-3.so* /usr/local/lib/postgresql/
+
+COPY --from=malkab/postgis_build:latest /usr/local/lib/libgeos_c.so* /usr/local/lib/
+
+COPY --from=malkab/postgis_build:latest /usr/local/lib/libgeos.so* /usr/local/lib/
 
 
 
+RUN ldconfig
 
 
 
