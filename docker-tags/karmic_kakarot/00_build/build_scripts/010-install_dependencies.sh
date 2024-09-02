@@ -2,12 +2,6 @@
 
 # Update and apt-get basic packages
 
-echo
-echo ---------------------------------------
-echo Installing packages
-echo ---------------------------------------
-echo
-
 # For autoinstalling tzdata
 ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 
@@ -21,7 +15,6 @@ apt-get install -y \
 	libcunit1-dev \
 	zlib1g-dev \
 	libreadline-dev \
-	apt-file \
 	bison \
 	flex \
 	libssl-dev \
@@ -30,14 +23,12 @@ apt-get install -y \
 	vim-tiny \
 	less \
   	cmake \
-	mlocate \
 	libxml2-dev \
 	libxslt1-dev \
 	curl \
 	zip \
 	unzip \
 	locales \
-	locate \
 	libjson-c-dev \
 	python3 \
 	python3-distutils \
@@ -70,12 +61,3 @@ apt-get install -y \
 dpkg-reconfigure --frontend noninteractive tzdata
 
 ldconfig
-
-# Make Python3 default
-ln -s /usr/bin/python3 /usr/bin/python
-
-# Update apt-file
-apt-file update
-
-# Update locate DB
-updatedb

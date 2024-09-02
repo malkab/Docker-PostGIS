@@ -17,33 +17,12 @@ cd /usr/local/src/postgresql-$PG_VERSION
 	--with-libxslt \
 	--with-zlib
 
-echo
-echo ---------------------------------------
-echo Building PostgreSQL
-echo ---------------------------------------
-echo
-
 make
-
-echo
-echo ---------------------------------------
-echo Installing PostgreSQL
-echo ---------------------------------------
-echo
-
 make install
 make install-docs
 
-echo
-echo ---------------------------------------
-echo Building PostgreSQL contrib
-echo ---------------------------------------
-echo
-
 cd contrib
-
 make all
-
 make install
 
 ldconfig

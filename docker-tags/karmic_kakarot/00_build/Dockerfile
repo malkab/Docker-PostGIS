@@ -33,9 +33,11 @@ ADD build_scripts /build_scripts
 ADD packages/dot.bashrc /root/.bashrc
 
 # Install basic dependencies
-RUN apt-get update
-RUN apt-get install -y fd-find bat
-RUN mv /usr/bin/batcat /usr/bin/bat
+RUN apt-get update && \
+    apt-get install -y fd-find bat mlocate apt-file && \
+    apt-file update && \
+    updatedb && \
+    mv /usr/bin/batcat /usr/bin/bat
 
 # Compile
 WORKDIR /build_scripts

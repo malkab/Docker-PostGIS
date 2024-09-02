@@ -115,48 +115,40 @@ COPY --from=malkab/postgis_build:latest /usr/local/bin/pg_ctl /usr/local/bin/pg_
 COPY --from=malkab/postgis_build:latest /usr/local/bin/psql /usr/local/bin/psql
 COPY --from=malkab/postgis_build:latest /usr/lib/x86_64-linux-gnu/libreadline.so* /usr/lib/x86_64-linux-gnu/
 COPY --from=malkab/postgis_build:latest /usr/local/lib/postgresql/postgis-3.so* /usr/local/lib/postgresql/
-
 COPY --from=malkab/postgis_build:latest /usr/local/lib/libgeos_c.so* /usr/local/lib/
-
 COPY --from=malkab/postgis_build:latest /usr/local/lib/libgeos.so* /usr/local/lib/
-
-
 
 RUN ldconfig
 
-
-
 # Metadata
 RUN echo ${DOCKER_IMAGE_TAG} > /docker_image_tag
-
-
 
 # Start & Stop
 STOPSIGNAL SIGINT
 ENTRYPOINT ["/usr/local/bin/run.sh"]
 
 
-# # --------------------------------------
-# #
-# # Final
-# #
-# # --------------------------------------
-# FROM scratch
+# --------------------------------------
+#
+# Final
+#
+# --------------------------------------
+FROM scratch
 
-# # Environment
-# ARG DOCKER_IMAGE_TAG
-# ENV DOCKER_IMAGE_TAG=${DOCKER_IMAGE_TAG}
-# ARG GDAL_VERSION
-# ENV GDAL_VERSION=${GDAL_VERSION}
-# ARG GEOS_VERSION
-# ENV GEOS_VERSION=${GEOS_VERSION}
-# ARG POSTGIS_VERSION
-# ENV POSTGIS_VERSION=${POSTGIS_VERSION}
-# ARG PG_VERSION
-# ENV PG_VERSION=${PG_VERSION}
-# ARG PROJ_VERSION
-# ENV PROJ_VERSION=${PROJ_VERSION}
+# Environment
+ARG DOCKER_IMAGE_TAG
+ENV DOCKER_IMAGE_TAG=${DOCKER_IMAGE_TAG}
+ARG GDAL_VERSION
+ENV GDAL_VERSION=${GDAL_VERSION}
+ARG GEOS_VERSION
+ENV GEOS_VERSION=${GEOS_VERSION}
+ARG POSTGIS_VERSION
+ENV POSTGIS_VERSION=${POSTGIS_VERSION}
+ARG PG_VERSION
+ENV PG_VERSION=${PG_VERSION}
+ARG PROJ_VERSION
+ENV PROJ_VERSION=${PROJ_VERSION}
 
-# COPY --from=production / /
+COPY --from=production / /
 
-# ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash" ]

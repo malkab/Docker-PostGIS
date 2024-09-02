@@ -6,4 +6,6 @@ Versions:
     GEOS          3.12.2
     PostGIS       3.4.2
     PostgreSQL    16.4
-    Proj          9.4.1
+    PROP          9.4.1
+
+The build image is a precursor for the GRASS image, which shares the same tags as this one.
