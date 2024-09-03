@@ -9,8 +9,7 @@
 #
 # -----------------------------------------------------------------
 docker run -ti --rm \
-    --name docker_postgis_test \
-    --hostname docker_postgis_test \
+    --name postgis_production_test \
     -e LOCALE=es_ES \
     -e POSTGRES_PASSWORD=postgres_aaa \
     -p 6432:5432 \

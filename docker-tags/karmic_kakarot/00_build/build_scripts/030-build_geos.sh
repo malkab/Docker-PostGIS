@@ -12,6 +12,7 @@ echo
 echo -----------------------------------------------------------------
 echo
 
+rm -Rf build
 mkdir build
 cd build
 

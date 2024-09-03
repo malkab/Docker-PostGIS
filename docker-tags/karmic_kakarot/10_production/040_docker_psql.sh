@@ -4,8 +4,8 @@
 . ../env.sh
 
 docker run -ti --rm \
-    --name docker_postgis_test_psql \
-    --network=container:docker_postgis_test \
+    --name postgis_test_psql \
+    --network=container:postgis_production_test \
     --user 1000:1000 \
     -v $(pwd):$(pwd) \
     --workdir $(pwd)/tests \

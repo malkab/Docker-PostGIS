@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# Use this container to test and debug compilation scripts
+# Use this container to test the production image
 
 # Load env variables
 . ../env.sh
 
 docker run -ti --rm \
-    --name postgis_${DOCKER_IMAGE_TAG}_test \
-    --hostname postgis_${DOCKER_IMAGE_TAG}_test \
+    --name postgis_production_bash \
     -e LOCALE=es_ES \
     -p 6432:5432 \
     --workdir / \

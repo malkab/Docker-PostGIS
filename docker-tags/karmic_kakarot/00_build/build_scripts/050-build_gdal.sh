@@ -12,13 +12,14 @@ echo
 echo -----------------------------------------------------------------
 echo
 
+rm -Rf build
 mkdir build
 cd build
 
 cmake \
     -DGDAL_USE_GEOTIFF_INTERNAL=OFF \
     -DGDAL_USE_PNG_INTERNAL=OFF \
-    -CMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr/local \
     ..
 
