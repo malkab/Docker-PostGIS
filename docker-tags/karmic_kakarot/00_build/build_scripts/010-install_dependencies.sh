@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo
+echo -----------------------------------------------------------------
+echo
+echo Installing dependencies
+echo
+echo -----------------------------------------------------------------
+echo
+
 # Update and apt-get basic packages
 
 # For autoinstalling tzdata
@@ -56,7 +64,8 @@ apt-get install -y \
 	libpng16-16 \
 	python3-numpy \
 	libxml2 \
-	libxml2-utils
+	libxml2-utils \
+	apt-utils
 
 dpkg-reconfigure --frontend noninteractive tzdata
 
