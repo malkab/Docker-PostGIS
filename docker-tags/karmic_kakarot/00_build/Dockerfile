@@ -37,7 +37,8 @@ RUN apt-get update && \
     apt-get install -y fd-find bat mlocate apt-file && \
     apt-file update && \
     updatedb && \
-    mv /usr/bin/batcat /usr/bin/bat
+    mv /usr/bin/batcat /usr/bin/bat && \
+    tee /apt_get_basic_dependencies.log
 
 # Compile
 WORKDIR /build_scripts_postgis
