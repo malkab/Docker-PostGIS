@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Check if the datastore is empty
-if [ -d "/data/" ] ; then
+if [ -z "$(ls -A /data/)" ]; then
 
-    echo "Datastore already exists..."
+    /usr/local/bin/setup_datastore.sh
 
 else
 
-    /usr/local/bin/setup_datastore.sh
+    echo "Datastore already exists..."
 
 fi
 

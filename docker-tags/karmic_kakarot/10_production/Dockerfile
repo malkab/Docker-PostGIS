@@ -5,7 +5,7 @@
 # Comment from here on to test build scripts.
 #
 # --------------------------------------
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim AS production
 
 # Environment
 ARG DOCKER_IMAGE_TAG
@@ -105,6 +105,11 @@ RUN groupadd -g 1000 postgres && \
     useradd -u 1000 -m -d '/home/postgres' -g postgres postgres && \
     chown -R postgres:postgres /home/postgres
 
+# Create the data directory
+RUN mkdir -p /data/ && \
+    chmod 0700 /data/ && \
+    chown -R postgres:postgres /data/
+
 # Copy assets from build
 COPY --from=malkab/postgis_build:latest /usr/local/bin/initdb /usr/local/bin/initdb
 COPY --from=malkab/postgis_build:latest /usr/local/bin/postgres /usr/local/bin/postgres
@@ -151,4 +156,4 @@ ENV PROJ_VERSION=${PROJ_VERSION}
 
 COPY --from=production / /
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT ["/usr/local/bin/run.sh"]

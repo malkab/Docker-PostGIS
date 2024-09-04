@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# -------------------------
+#
+# Tests GDAL transformations.
+#
+# -------------------------
+
 echo
 echo
 echo --------------------

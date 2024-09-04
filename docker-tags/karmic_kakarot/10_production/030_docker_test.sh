@@ -10,7 +10,7 @@
 # -----------------------------------------------------------------
 docker run -ti --rm \
     --name postgis_production_test \
-    -e LOCALE=es_ES \
+    -e LANG=es_ES.UTF-8 \
     -e POSTGRES_PASSWORD=postgres_aaa \
     -p 6432:5432 \
     malkab/postgis:${DOCKER_IMAGE_TAG}

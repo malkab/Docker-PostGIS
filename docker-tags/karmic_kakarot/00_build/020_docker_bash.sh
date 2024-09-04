@@ -7,5 +7,6 @@
 
 docker run -ti --rm \
     --name postgis_build_test \
-    -v $(pwd):/source \
+    -v $(pwd):$(pwd) \
+    --workdir $(pwd) \
     malkab/postgis_build:${DOCKER_IMAGE_TAG}
