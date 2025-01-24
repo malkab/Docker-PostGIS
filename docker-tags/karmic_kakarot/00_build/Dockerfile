@@ -42,9 +42,12 @@ RUN apt-get update && \
 
 # Compile
 WORKDIR /build_scripts_postgis
+
+# A partir de aquí se puede se pueden comentar las líneas que no se quieren
+# ejecutar para con make run entrar interactivamente a ella y depurar problemas.
 RUN ./010-install_dependencies.sh | tee 010-install_dependencies.log
 RUN ./020-build_postgresql.sh | tee 020-build_postgresql.log
 RUN ./030-build_geos.sh | tee 030-build_geos.log
 RUN ./040-build_proj.sh | tee 040-build_proj.log
-RUN ./050-build_gdal.sh | tee 050-build_gdal.log
-RUN ./060-build_postgis.sh | tee 060-build_postgis.log
+# RUN ./050-build_gdal.sh | tee 050-build_gdal.log
+# RUN ./060-build_postgis.sh | tee 060-build_postgis.log
